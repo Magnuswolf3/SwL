@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+//Use Generics for Node because the main attribute we want to have is connection between different nodes
+public class Node<T> : MonoBehaviour
 {
     public bool first, last = true;
     public bool ready = false;
-    public Node prevNode, nextNode;
-    public Vector3 desiredLocation;
+    public T prevNode, nextNode;
+    private Vector3 desiredLocation;
 
-    public void setDesire(Vector3 desiredLocation){
-        this.desiredLocation = desiredLocation;
-    }
+    public Vector3 DesiredLocation { get => desiredLocation; set => desiredLocation = value; }
 
-    public Node(Node prevNode, Node nextNode, Vector3 position)
+    public Node(T prevNode, T nextNode, Vector3 position)
     {
         this.prevNode = prevNode;
         this.nextNode = nextNode;
@@ -26,7 +25,7 @@ public class Node : MonoBehaviour
 
     public Node()
     {
-        this.prevNode = null;
-        this.nextNode = null;
+        this.prevNode = default(T);
+        this.nextNode = default(T);
     }
 }

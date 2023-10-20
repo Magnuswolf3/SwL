@@ -6,7 +6,7 @@ public class Node_Internal : MonoBehaviour
 {
     // public Node node = new Node();
     // public Node node = null;
-    public Node node, prevNode, nextNode;
+    public Node<Node_Internal> node, prevNode, nextNode;
     private Rigidbody2D rg;
     private float maxDist, minDist, followSpeed;
     private float legLen = 1f;
@@ -22,12 +22,12 @@ public class Node_Internal : MonoBehaviour
 
     Vector3 currPos, refPos;
 
-/*    void Awake()
-    {
-        node = new Node();
-    }*/
+    /*    void Awake()
+        {
+            node = new Node();
+        }*/
 
-    public void Initialize(Node prev, Node next, float maxDist, float minDist, float followSpeed, GameObject lPlace = null, GameObject rPlace = null, GameObject lOrigin = null, GameObject rOrigin = null, GameObject lFoot = null, GameObject rFoot = null, GameObject lElbow = null, GameObject rElbow = null){
+   /* public void Initialize(Node_Internal prev, Node_Interna next, float maxDist, float minDist, float followSpeed, GameObject lPlace = null, GameObject rPlace = null, GameObject lOrigin = null, GameObject rOrigin = null, GameObject lFoot = null, GameObject rFoot = null, GameObject lElbow = null, GameObject rElbow = null){
         // node.initNode(prev, next, gameObject, prevPos);
         node = new Node(prev, next, gameObject, prevPos);
         Debug.Log(node.prevNode);
@@ -71,7 +71,7 @@ public class Node_Internal : MonoBehaviour
         // {
         //     jointApply(node, maxDist, followSpeed);
         // }
-    }
+    }*/
 
     // Start is called before the first frame update
     void Start()
@@ -104,7 +104,7 @@ public class Node_Internal : MonoBehaviour
     // Try an update where you create a specified location that the current node is aiming to get to, this location is updated when the
     // Player node moves a certain amount and this goal location is updated throughout the graph. Desired location variable!
 
-    private void distanceSlerp(Node node, float maxDist, float followSpeed){
+    private void distanceSlerp(Node_Internal node, float maxDist, float followSpeed){
         // Use distance to attempt to figure out positions and such
         Vector3 prevDifference = (prevNode.gameObject.transform.position - node.gameObject.transform.position);
         Vector3 prevMidpoint = node.gameObject.transform.position + 0.5f * prevDifference; 
@@ -120,7 +120,7 @@ public class Node_Internal : MonoBehaviour
         }
     }
 
-    private static void jointApply(Node node, float maxDist, float followSpeed){
+    private static void jointApply(Node_Internal node, float maxDist, float followSpeed){
         SpringJoint2D joint = node.gameObject.AddComponent<SpringJoint2D>();
         joint.connectedBody = node.prevNode.gameObject.GetComponent<Rigidbody2D>();
         joint.autoConfigureDistance = false;
@@ -302,7 +302,7 @@ public class Node_Internal : MonoBehaviour
         // Vector3 nextMidpoint = node.gameObject.transform.position + 0.5f * nextDifference;
 
         // Debug.Log("New Current Desire: " + currentDesire);
-        node.setDesire(currentDesire);
+        node.DesiredLocation = currentDesire;
 
 
 
@@ -344,7 +344,7 @@ public class Node_Internal : MonoBehaviour
 
         if (Vector3.Magnitude(currPos - refPos) < minDist) { return; }
         
-        Debug.Log("Should Move Node " + gameObject.name + ": "+ gameObject.transform.position + "; "+ node.desiredLocation + "; " + followSpeed);
-        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, node.desiredLocation, followSpeed);
+        Debug.Log("Should Move Node " + gameObject.name + ": "+ gameObject.transform.position + "; "+ node.DesiredLocation + "; " + followSpeed);
+        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, node.DesiredLocation, followSpeed);
     }
 }

@@ -36,7 +36,7 @@ public class Limb_Info
 public class Node_Handler : MonoBehaviour   
 {   
     /*[SerializeField] private List<Node_Internal> nodeList;*/
-    [SerializeField] private List<Node_Behaviour> nodeList;
+    [SerializeField] private List<Body_Node> nodeList;
     [SerializeField] private GameObject baseFoot;
     [SerializeField] private float maxDist = 1f, minDist = 0.01f, followSpeed = 0.1f, feetY = 2f, feetX = 2f, radius=1f;
 
@@ -45,7 +45,7 @@ public class Node_Handler : MonoBehaviour
     {
         Debug.Log(nodeList.Count);
 
-        for (int i = 0; i < nodeList.Count; i++) { nodeList[i] = new Node_Behaviour(); }
+        /*for (int i = 0; i < nodeList.Count; i++) { nodeList[i] = new Body_Node(); }*/
 
 
         for (int i = 0; i < nodeList.Count; i++){
@@ -56,7 +56,8 @@ public class Node_Handler : MonoBehaviour
             if (i == 0)
             {
                 Debug.Log("Init Head " + i);
-                nodeList[i].Initialize(null, nodeList[i+1].node, maxDist, minDist, followSpeed);
+                /*nodeList[i].Initialize(null, nodeList[i+1].node, maxDist, minDist, followSpeed);*/
+                nodeList[i].Initialize(null, nodeList[i + 1], maxDist, minDist, followSpeed, null);
             }
             else if (i == (nodeList.Count - 1))
             {
@@ -136,7 +137,9 @@ public class Node_Handler : MonoBehaviour
 
                 limbs = new Limb_Info( new GameObject[] { lPlace, rPlace, lOrigin, rOrigin, lFoot, rFoot, lElbow, rElbow });
 
-                nodeList[i].Initialize(nodeList[i-1].node, null, maxDist, minDist, followSpeed, limbs);
+                /* nodeList[i].Initialize(nodeList[i-1].node, null, maxDist, minDist, followSpeed, limbs);*/
+                nodeList[i].Initialize(nodeList[i - 1], null, maxDist, minDist, followSpeed, limbs);
+
             }            
             else
             {
@@ -210,7 +213,8 @@ public class Node_Handler : MonoBehaviour
                 // }
                 limbs = new Limb_Info(new GameObject[] { lPlace, rPlace, lOrigin, rOrigin, lFoot, rFoot, lElbow, rElbow });
 
-                nodeList[i].Initialize(nodeList[i-1].node, nodeList[i+1].node, maxDist, minDist, followSpeed, limbs);                
+                /*nodeList[i].Initialize(nodeList[i-1].node, nodeList[i+1].node, maxDist, minDist, followSpeed, limbs);  */
+                nodeList[i].Initialize(nodeList[i - 1], nodeList[i + 1], maxDist, minDist, followSpeed, limbs);
             }
         }
     }

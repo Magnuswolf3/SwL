@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class Node_Behaviour : Node
+    public class Node_Behaviour : Node<Node_Behaviour>
     {
         private float maxDist, minDist, followSpeed;
         private float legLen = 1f;
