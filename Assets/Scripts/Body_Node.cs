@@ -9,15 +9,16 @@ namespace Assets.Scripts
 {
     public class Body_Node : Node<Body_Node>
     {
+        // Define Private Variables
         private float maxDist, minDist, followSpeed;
         private float legLen = 1.5f;
-        private Vector3 dDirection, newDesire, prevDifference;
+        private Vector3 dDirection;
         private LineRenderer line, rLine, lLine;
         private Quaternion angle;
         private AudioSource rFAudio, lFAudio;
         private Limb_Info limbs;
 
-        //Define shortcuts for better readability.
+        // Define shortcuts for better readability.
         private Vector3 CurrentPosition => transform.position;
         private Vector3 ReferencePosition => prevNode.transform.position;
         private Vector3 PositionDifference => ReferencePosition - CurrentPosition;
@@ -42,10 +43,10 @@ namespace Assets.Scripts
                 rFAudio = limbs.rFoot.GetComponent<AudioSource>();
                 lFAudio = limbs.lFoot.GetComponent<AudioSource>();
 
-                this.rLine = limbs.rFoot.GetComponent<LineRenderer>();
-                this.rLine.positionCount = 3;
-                this.lLine = limbs.lFoot.GetComponent<LineRenderer>();
-                this.lLine.positionCount = 3;
+                rLine = limbs.rFoot.GetComponent<LineRenderer>();
+                rLine.positionCount = 3;
+                lLine = limbs.lFoot.GetComponent<LineRenderer>();
+                lLine.positionCount = 3;
 
                 rLine.startWidth = 0.05f;
                 rLine.endWidth = 0.25f;
@@ -93,8 +94,6 @@ namespace Assets.Scripts
             // If last node then don't look for next node to update
             if (last) { return; }
             nextNode.updateDesire();
-
-            
         }
 
         // Function to move feet if necessary otherwise position elbows in relation to the origin of the limb and the
@@ -185,13 +184,11 @@ namespace Assets.Scripts
             RotateNode();
             MoveFeet();
 
-            /*print("Current Position: " + CurrentPosition);
-            print("Reference Position: " + ReferencePosition);*/
-            print("Position Diff: " + PositionDifference);
-
+            // Move current node to its desired position unless its too close
             if (Vector3.Magnitude(PositionDifference) < minDist) { return; }
             transform.position = Vector3.Lerp(CurrentPosition, DesiredLocation, followSpeed);
 
+            // Update the current nodes desire if the current position is greater than a certain amount
             if (Vector3.Magnitude(PositionDifference) < maxDist) { return; }
             updateDesire();
 

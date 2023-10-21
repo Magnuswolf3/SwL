@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// Class for storing all related limb information
 public class Limb_Info
 {
     public GameObject lPlace, rPlace, lOrigin, rOrigin, lFoot, rFoot, lElbow, rElbow;
@@ -35,7 +36,7 @@ public class Limb_Info
 
 public class Node_Handler : MonoBehaviour   
 {   
-    /*[SerializeField] private List<Node_Internal> nodeList;*/
+    // Initializing Private Variables
     [SerializeField] private List<Body_Node> nodeList;
     [SerializeField] private GameObject baseFoot;
     [SerializeField] private float maxDist = 1f, minDist = 0.01f, followSpeed = 0.1f, feetY = 1.5f, feetX = 1.5f, radius=1f, legLen = 1.1f;
@@ -43,32 +44,28 @@ public class Node_Handler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Debug.Log(nodeList.Count);
-
-        /*for (int i = 0; i < nodeList.Count; i++) { nodeList[i] = new Body_Node(); }*/
-
-
+        // Main Limb Generation Loop
         for (int i = 0; i < nodeList.Count; i++){
-            // Every Second Foot has its left foot forward
-            // bool lFootForward = (i%2 != 0);
+
             Limb_Info limbs;
 
             if (i == 0)
             {
+                nodeList[i].name = "H_Node";
+                // If the first node in list, no legs generated.
                 Debug.Log("Init Head " + i);
-                /*nodeList[i].Initialize(null, nodeList[i+1].node, maxDist, minDist, followSpeed);*/
+
                 nodeList[i].Initialize(null, nodeList[i + 1], maxDist, minDist, followSpeed, null, legLen);
             }
             else if (i == (nodeList.Count - 1))
             {
+                nodeList[i].name = "T_Node";
+                // If last node in last, legs generated but no next node initialized.
                 Debug.Log("Init Tail " + i);
 
                 GameObject lPlace = new("LPlace");
                 GameObject rPlace = new("RPlace");
 
-                // GameObject lOrigin = new GameObject("LOrigin");
-                // GameObject rOrigin = new GameObject("ROrigin");
-
                 GameObject lOrigin = Instantiate(baseFoot);
                 GameObject rOrigin = Instantiate(baseFoot);
 
@@ -113,43 +110,22 @@ public class Node_Handler : MonoBehaviour
                 rElbow.transform.localPosition = new Vector3(feetX/2, 0, 0);
 
                 // Convert to objects that are parented under general object structure
-
                 lFoot.transform.parent = gameObject.transform;
                 rFoot.transform.parent = gameObject.transform;
 
-                // lElbow.transform.parent = gameObject.transform;
-                // rElbow.transform.parent = gameObject.transform;
-
-                // // Should make extra objects that act as assigned 
-                // lFoot.transform.position = new Vector3();
-                // rFoot.transform.position = new Vector3();
-
-                // if (lFootForward)
-                // {
-                //     lFoot.transform.localPosition = new Vector3(Random.Range(-feetX/2, -feetX), Random.Range(feetY/2, feetY), 0);
-                //     rFoot.transform.localPosition = new Vector3(Random.Range(feetX/2, feetX), Random.Range(-feetY/2, -feetY), 0);
-                // }
-                // else
-                // {
-                //     lFoot.transform.localPosition = new Vector3(Random.Range(-feetX/2, -feetX), Random.Range(-feetY/2, -feetY), 0);
-                //     rFoot.transform.localPosition = new Vector3(Random.Range(feetX/2, feetX), Random.Range(feetY/2, feetY), 0);
-                // }
-
                 limbs = new Limb_Info( new GameObject[] { lPlace, rPlace, lOrigin, rOrigin, lFoot, rFoot, lElbow, rElbow });
 
-                /* nodeList[i].Initialize(nodeList[i-1].node, null, maxDist, minDist, followSpeed, limbs);*/
                 nodeList[i].Initialize(nodeList[i - 1], null, maxDist, minDist, followSpeed, limbs, legLen);
 
             }            
             else
             {
+                nodeList[i].name = "Node_"+i;
+                // If not tail or head, initialize and instantiate limbs and set previous and next nodes
                 Debug.Log("Init Node " + i);
 
                 GameObject lPlace = new("LPlace");
                 GameObject rPlace = new("RPlace");
-
-                // GameObject lOrigin = new GameObject("LOrigin");
-                // GameObject rOrigin = new GameObject("ROrigin");
 
                 GameObject lOrigin = Instantiate(baseFoot);
                 GameObject rOrigin = Instantiate(baseFoot);
@@ -198,30 +174,10 @@ public class Node_Handler : MonoBehaviour
                 lFoot.transform.parent = gameObject.transform;
                 rFoot.transform.parent = gameObject.transform;
 
-                // lElbow.transform.parent = gameObject.transform;
-                // rElbow.transform.parent = gameObject.transform;
-
-                // if (lFootForward)
-                // {
-                //     lFoot.transform.localPosition = new Vector3(-feetX, Random.Range(feetY/2, feetY), 0);
-                //     rFoot.transform.localPosition = new Vector3(feetX, Random.Range(-feetY/2, -feetY), 0);
-                // }
-                // else
-                // {
-                //     lFoot.transform.localPosition = new Vector3(-feetX, Random.Range(-feetY/2, -feetY), 0);
-                //     rFoot.transform.localPosition = new Vector3(feetX, Random.Range(feetY/2, feetY), 0);
-                // }
                 limbs = new Limb_Info(new GameObject[] { lPlace, rPlace, lOrigin, rOrigin, lFoot, rFoot, lElbow, rElbow });
 
-                /*nodeList[i].Initialize(nodeList[i-1].node, nodeList[i+1].node, maxDist, minDist, followSpeed, limbs);  */
                 nodeList[i].Initialize(nodeList[i - 1], nodeList[i + 1], maxDist, minDist, followSpeed, limbs, legLen);
             }
         }
     }
-
-    // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
 }

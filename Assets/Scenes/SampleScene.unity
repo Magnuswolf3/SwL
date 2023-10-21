@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Name
-      value: Node
+      value: Node_2
       objectReference: {fileID: 0}
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Layer
@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 484072474}
   - component: {fileID: 484072475}
   m_Layer: 6
-  m_Name: P_Node
+  m_Name: H_Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,7 +229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1491e9e042b7564e8a0f25a269d07ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  node: {fileID: 0}
   speed: 0.5
   max_Dist: 1.5
 --- !u!212 &484072469
@@ -850,7 +849,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Name
-      value: Node (3)
+      value: Node_5
       objectReference: {fileID: 0}
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Layer
@@ -934,7 +933,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Name
-      value: Node (2)
+      value: Node_4
       objectReference: {fileID: 0}
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Layer
@@ -1045,7 +1044,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Name
-      value: Node (1)
+      value: Node_3
       objectReference: {fileID: 0}
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Layer
@@ -1129,7 +1128,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Name
-      value: Node
+      value: Node_1
       objectReference: {fileID: 0}
     - target: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
       propertyPath: m_Layer

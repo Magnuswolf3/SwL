@@ -5,18 +5,22 @@ using UnityEngine;
 //Use Generics for Node because the main attribute we want to have is connection between different nodes
 public class Node<T> : MonoBehaviour
 {
-    public bool first, last = true;
-    public bool ready = false;
-    public T prevNode, nextNode;
-    private Vector3 desiredLocation;
+    // Protected Variables for Node class
+    protected bool first, last = true;
+    protected bool ready = false;
+    protected T prevNode, nextNode;
+    protected Vector3 desiredLocation;
 
-    public Vector3 DesiredLocation { get => desiredLocation; set => desiredLocation = value; }
+    // Getters and Setters for Protected Variables
+    public T PNode                  { get => prevNode; set => prevNode = value; }
+    public T NNode                  { get => nextNode; set => nextNode = value; }
+    public Vector3 DesiredLocation  { get => desiredLocation; set => desiredLocation = value; }
 
-    public Node(T prevNode, T nextNode, Vector3 position)
+/*    public Node(T prevNode, T nextNode, Vector3 position)
     {
-        this.prevNode = prevNode;
-        this.nextNode = nextNode;
-        this.desiredLocation = position;
+        PNode = prevNode;
+        NNode = nextNode;
+        DesiredLocation = position;
 
         first = (prevNode == null);
         last = (nextNode == null);
@@ -25,7 +29,7 @@ public class Node<T> : MonoBehaviour
 
     public Node()
     {
-        this.prevNode = default(T);
-        this.nextNode = default(T);
-    }
+        PNode = default(T);
+        NNode = default(T);
+    }*/
 }

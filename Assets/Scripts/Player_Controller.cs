@@ -6,25 +6,22 @@ namespace Assets.Scripts
 {
     public class Player_Controller : MonoBehaviour
     {
-        private Vector3 worldPos, prevPos, mousePos;
-        private Camera cam;
-        private float camHeight, camWidth;
-        public Body_Node node;
+        // Private Variables
+        private Vector3 worldPos, mousePos;
+        private Body_Node node;
 
+        // Serializable Private Variables
         [SerializeField] private float speed = 0.5f;
         [SerializeField] private float max_Dist = 2f;
 
-        private Vector3 diff => transform.position - node.nextNode.transform.position;
+        // Define shortcuts for better readability.
+        private Vector3 diff => transform.position - node.NNode.transform.position;
 
         // Start is called before the first frame update
         void Start()
         {
             //Initializing Variables
-            cam = Camera.main;
-            camWidth = cam.orthographicSize * 5f;
-            camHeight = camWidth * cam.aspect;
-
-            node = gameObject.GetComponent<Body_Node>();
+            node = GetComponent<Body_Node>();
         }
 
         // Update is called once per frame
