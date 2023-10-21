@@ -11,7 +11,7 @@ namespace Assets.Scripts
     {
         private float maxDist, minDist, followSpeed;
         private float legLen = 1.5f;
-        private Vector3 dDirection;
+        private Vector3 dDirection, newDesire, prevDifference;
         private LineRenderer line, rLine, lLine;
         private Quaternion angle;
         private AudioSource rFAudio, lFAudio;
@@ -20,6 +20,7 @@ namespace Assets.Scripts
         //Define shortcuts for better readability.
         private Vector3 CurrentPosition => transform.position;
         private Vector3 ReferencePosition => prevNode.transform.position;
+        private Vector3 PositionDifference => ReferencePosition - CurrentPosition;
 
         // Use this for initialization once the limbs have been instantiated
         public void Initialize(Body_Node prev, Body_Node next, float maxD, float minD, float fS, Limb_Info l, float legL = 1.1f)
@@ -72,14 +73,28 @@ namespace Assets.Scripts
         }
 
         // Update the desired position of the node and update the desired position of the next node in the list
-        public void updateDesire(Vector3 currentDesire)
+        public void updateDesire()
         {
             // If not ready, don't set current node
             if (!ready) { return; }
-            DesiredLocation = currentDesire;
 
+            // If its the head node or the difference between parts isn't greater than a certain amount, don't calculate desire
+            if (first) {
+                nextNode.updateDesire();
+                return;
+            }
+
+            // Set Desired location with a certain degree of randomness as to where this position will lie
+            if (Vector3.Magnitude(PositionDifference) > maxDist)
+            {
+                DesiredLocation = transform.position + Vector3.Normalize(PositionDifference) * Random.Range(minDist, maxDist) + new Vector3(Random.Range(-0.07f, 0.07f), Random.Range(-0.07f, 0.07f), 0);
+            }
+
+            // If last node then don't look for next node to update
             if (last) { return; }
-            nextNode.updateDesire(CurrentPosition);
+            nextNode.updateDesire();
+
+            
         }
 
         // Function to move feet if necessary otherwise position elbows in relation to the origin of the limb and the
@@ -87,17 +102,6 @@ namespace Assets.Scripts
         private void MoveFeet()
         {
             line.SetPositions(new Vector3[] { CurrentPosition, ReferencePosition });
-            // If the distances between the current position of the foot and the possible next position is larger
-            // than a certain amount, then change the position of the foot.
-            /*if (Vector3.Distance(limbs.rFoot.transform.position, limbs.rPlace.transform.position) > legLen * 5)
-            {
-                limbs.rFoot.transform.position = limbs.rPlace.transform.position + new Vector3(Random.Range(-0.07f, 0.07f), Random.Range(-0.07f, 0.07f), 0);
-            }
-            
-            if (Vector3.Distance(limbs.lFoot.transform.position, limbs.lPlace.transform.position) > legLen * 5)
-            {
-                limbs.lFoot.transform.position = limbs.lPlace.transform.position + new Vector3(Random.Range(-0.07f, 0.07f), Random.Range(-0.07f, 0.07f), 0);
-            }*/
 
             // Find the position of the feet relative to their connectors on the body
             Vector3 relRFoot = limbs.rFoot.transform.position - limbs.rOrigin.transform.position;
@@ -124,7 +128,7 @@ namespace Assets.Scripts
 
             // If the elbow reaches a state where the calculations are impossible, move the feet and play a noise
             // otherwise simply calculate the position of the foot
-            if (float.IsNaN(rElbowX) && float.IsNaN(rElbowY))
+            if (float.IsNaN(rElbowX) && float.IsNaN(rElbowY) || Vector3.Distance(limbs.rFoot.transform.position, limbs.rPlace.transform.position) > legLen * 5)
             {
                 limbs.rFoot.transform.position = limbs.rPlace.transform.position + new Vector3(Random.Range(-0.07f, 0.07f), Random.Range(-0.07f, 0.07f), 0);
                 rFAudio.pitch = Random.Range(1f, 3f);
@@ -138,7 +142,7 @@ namespace Assets.Scripts
                 rLine.SetPositions(new Vector3[] { limbs.rFoot.transform.position, limbs.rElbow.transform.position, limbs.rOrigin.transform.position });
             }
 
-            if (float.IsNaN(lElbowX) && float.IsNaN(lElbowY))
+            if (float.IsNaN(lElbowX) && float.IsNaN(lElbowY) || Vector3.Distance(limbs.lFoot.transform.position, limbs.lPlace.transform.position) > legLen * 5)
             {
                 limbs.lFoot.transform.position = limbs.lPlace.transform.position + new Vector3(Random.Range(-0.07f, 0.07f), Random.Range(-0.07f, 0.07f), 0);
                 lFAudio.pitch = Random.Range(1f, 3f);
@@ -166,7 +170,7 @@ namespace Assets.Scripts
         // Rotates the node to face the direction its moving in.
         private void RotateNode()
         {
-            dDirection = (ReferencePosition - CurrentPosition) / Vector3.Magnitude((ReferencePosition - CurrentPosition));
+            dDirection = (PositionDifference) / Vector3.Magnitude(PositionDifference);
             angle = requiredAngle(dDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, angle, 2f);
         }
@@ -181,11 +185,16 @@ namespace Assets.Scripts
             RotateNode();
             MoveFeet();
 
-            print("Current Position: " + CurrentPosition);
-            print("Reference Position: " + ReferencePosition);
+            /*print("Current Position: " + CurrentPosition);
+            print("Reference Position: " + ReferencePosition);*/
+            print("Position Diff: " + PositionDifference);
 
-            if (Vector3.Magnitude(CurrentPosition - ReferencePosition) <= minDist) { return; }
+            if (Vector3.Magnitude(PositionDifference) < minDist) { return; }
             transform.position = Vector3.Lerp(CurrentPosition, DesiredLocation, followSpeed);
+
+            if (Vector3.Magnitude(PositionDifference) < maxDist) { return; }
+            updateDesire();
+
         }
     }
 }
