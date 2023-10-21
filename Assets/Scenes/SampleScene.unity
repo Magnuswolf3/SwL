@@ -624,9 +624,10 @@ MonoBehaviour:
   maxDist: 1
   minDist: 0.01
   followSpeed: 0.1
-  feetY: 2
-  feetX: 2
+  feetY: 1.5
+  feetX: 1.5
   radius: 1
+  legLen: 1.1
 --- !u!4 &851233619
 Transform:
   m_ObjectHideFlags: 0

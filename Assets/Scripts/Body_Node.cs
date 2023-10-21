@@ -10,7 +10,7 @@ namespace Assets.Scripts
     public class Body_Node : Node<Body_Node>
     {
         private float maxDist, minDist, followSpeed;
-        private float legLen = 1f;
+        private float legLen = 1.5f;
         private Vector3 dDirection;
         private LineRenderer line, rLine, lLine;
         private Quaternion angle;
@@ -22,7 +22,7 @@ namespace Assets.Scripts
         private Vector3 ReferencePosition => prevNode.transform.position;
 
         // Use this for initialization once the limbs have been instantiated
-        public void Initialize(Body_Node prev, Body_Node next, float maxD, float minD, float fS, Limb_Info l)
+        public void Initialize(Body_Node prev, Body_Node next, float maxD, float minD, float fS, Limb_Info l, float legL = 1.1f)
         {
             prevNode = prev;
             nextNode = next;
@@ -30,6 +30,7 @@ namespace Assets.Scripts
             minDist = minD;
             followSpeed = fS;
             limbs = l;
+            legLen = legL;
 
             first = (prevNode == null);
             last = (nextNode == null);
@@ -88,14 +89,15 @@ namespace Assets.Scripts
             line.SetPositions(new Vector3[] { CurrentPosition, ReferencePosition });
             // If the distances between the current position of the foot and the possible next position is larger
             // than a certain amount, then change the position of the foot.
-            if (Vector3.Distance(limbs.rFoot.transform.position, limbs.rPlace.transform.position) > legLen * 5)
+            /*if (Vector3.Distance(limbs.rFoot.transform.position, limbs.rPlace.transform.position) > legLen * 5)
             {
                 limbs.rFoot.transform.position = limbs.rPlace.transform.position + new Vector3(Random.Range(-0.07f, 0.07f), Random.Range(-0.07f, 0.07f), 0);
             }
-            else if (Vector3.Distance(limbs.lFoot.transform.position, limbs.lPlace.transform.position) > legLen * 5)
+            
+            if (Vector3.Distance(limbs.lFoot.transform.position, limbs.lPlace.transform.position) > legLen * 5)
             {
                 limbs.lFoot.transform.position = limbs.lPlace.transform.position + new Vector3(Random.Range(-0.07f, 0.07f), Random.Range(-0.07f, 0.07f), 0);
-            }
+            }*/
 
             // Find the position of the feet relative to their connectors on the body
             Vector3 relRFoot = limbs.rFoot.transform.position - limbs.rOrigin.transform.position;
@@ -179,7 +181,10 @@ namespace Assets.Scripts
             RotateNode();
             MoveFeet();
 
-            if (Vector3.Magnitude(CurrentPosition - ReferencePosition) < minDist) { return; }
+            print("Current Position: " + CurrentPosition);
+            print("Reference Position: " + ReferencePosition);
+
+            if (Vector3.Magnitude(CurrentPosition - ReferencePosition) <= minDist) { return; }
             transform.position = Vector3.Lerp(CurrentPosition, DesiredLocation, followSpeed);
         }
     }
