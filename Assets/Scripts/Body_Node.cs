@@ -171,7 +171,7 @@ namespace Assets.Scripts
         {
             dDirection = (PositionDifference) / Vector3.Magnitude(PositionDifference);
             angle = requiredAngle(dDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, angle, 2f);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, angle, Time.deltaTime * followSpeed * 50);
         }
 
         // Update is called once per frame
@@ -186,7 +186,7 @@ namespace Assets.Scripts
 
             // Move current node to its desired position unless its too close
             if (Vector3.Magnitude(PositionDifference) < minDist) { return; }
-            transform.position = Vector3.Lerp(CurrentPosition, DesiredLocation, followSpeed);
+            transform.position = Vector3.Lerp(CurrentPosition, DesiredLocation, followSpeed * Time.deltaTime);
 
             // Update the current nodes desire if the current position is greater than a certain amount
             if (Vector3.Magnitude(PositionDifference) < maxDist) { return; }

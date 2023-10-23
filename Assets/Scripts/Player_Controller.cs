@@ -37,7 +37,7 @@ namespace Assets.Scripts
             mousePos = Input.mousePosition;
             worldPos = Camera.main.ScreenToWorldPoint(mousePos);
             worldPos.z = 0;
-            transform.position = Vector3.Lerp(transform.position, worldPos, speed);
+            transform.position = Vector3.Lerp(transform.position, worldPos, speed * Time.deltaTime);
 
             // If the distance between the head and the next node is larger than a certain amount, start recursive update
             if (Vector3.Magnitude(diff) > max_Dist)

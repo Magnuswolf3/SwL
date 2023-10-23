@@ -134,11 +134,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7477562519263815476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d908ee8a7c62954897977dedf5bce38, type: 3}
+  m_Script: {fileID: 11500000, guid: 77713a1e46dd97d4d8ef87fa2cfea480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lFootPos: {x: 0, y: 0, z: 0}
-  rFootPos: {x: 0, y: 0, z: 0}
 --- !u!120 &5470782735446396394
 LineRenderer:
   m_ObjectHideFlags: 0

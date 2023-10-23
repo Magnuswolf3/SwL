@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1491e9e042b7564e8a0f25a269d07ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  speed: 50
   max_Dist: 1.5
 --- !u!212 &484072469
 SpriteRenderer:
@@ -329,7 +329,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -446,11 +446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77713a1e46dd97d4d8ef87fa2cfea480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 0
-  last: 1
-  ready: 0
-  prevNode: {fileID: 0}
-  nextNode: {fileID: 0}
 --- !u!1 &508557589 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
@@ -576,11 +571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77713a1e46dd97d4d8ef87fa2cfea480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 0
-  last: 0
-  ready: 0
-  prevNode: {fileID: 0}
-  nextNode: {fileID: 0}
 --- !u!1 &851233617
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,11 +612,11 @@ MonoBehaviour:
   baseFoot: {fileID: 8882942307744442184, guid: 592b97022b402d34987c7d8f6d6c4ea1, type: 3}
   maxDist: 2.5
   minDist: 1.5
-  followSpeed: 0.1
+  followSpeed: 25
   feetY: 1
   feetX: 1
   radius: 1
-  legLen: 1
+  legLen: 0.9
 --- !u!4 &851233619
 Transform:
   m_ObjectHideFlags: 0
@@ -919,11 +909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77713a1e46dd97d4d8ef87fa2cfea480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 0
-  last: 0
-  ready: 0
-  prevNode: {fileID: 0}
-  nextNode: {fileID: 0}
 --- !u!1001 &1226082153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1003,11 +988,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77713a1e46dd97d4d8ef87fa2cfea480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 0
-  last: 0
-  ready: 0
-  prevNode: {fileID: 0}
-  nextNode: {fileID: 0}
 --- !u!1 &1280761189 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
@@ -1030,11 +1010,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77713a1e46dd97d4d8ef87fa2cfea480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 0
-  last: 0
-  ready: 0
-  prevNode: {fileID: 0}
-  nextNode: {fileID: 0}
 --- !u!1001 &2003394134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1114,11 +1089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77713a1e46dd97d4d8ef87fa2cfea480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: 0
-  last: 0
-  ready: 0
-  prevNode: {fileID: 0}
-  nextNode: {fileID: 0}
 --- !u!1001 &7477562518117905298
 PrefabInstance:
   m_ObjectHideFlags: 0
