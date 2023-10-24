@@ -1,35 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-//Use Generics for Node because the main attribute we want to have is connection between different nodes
-public class Node<T> : MonoBehaviour
+// Abstract class to define relationship between different nodes
+public abstract class Node : MonoBehaviour
 {
     // Protected Variables for Node class
-    protected bool first, last = true;
+    protected bool head, tail = true;
     protected bool ready = false;
-    protected T prevNode, nextNode;
-    protected Vector3 desiredLocation;
+    protected Node prevNode = null, nextNode = null;
+    protected Vector3 targetPos = Vector3.zero;
 
     // Getters and Setters for Protected Variables
-    public T PNode                  { get => prevNode; set => prevNode = value; }
-    public T NNode                  { get => nextNode; set => nextNode = value; }
-    public Vector3 DesiredLocation  { get => desiredLocation; set => desiredLocation = value; }
+    protected Node PrevNode         { get => prevNode; set => prevNode = value; }
+    protected Node NextNode         { get => nextNode; set => nextNode = value; }
+    public Vector3 TargetPosition   { get => targetPos; set => targetPos = value; }
 
-/*    public Node(T prevNode, T nextNode, Vector3 position)
-    {
-        PNode = prevNode;
-        NNode = nextNode;
-        DesiredLocation = position;
-
-        first = (prevNode == null);
-        last = (nextNode == null);
-        ready = true;
-    }
-
-    public Node()
-    {
-        PNode = default(T);
-        NNode = default(T);
-    }*/
+    // Method for updating the movement of the node, defined differently for whether its a head node or body node
+    public abstract void UpdatePosition();
 }

@@ -209,7 +209,6 @@ GameObject:
   - component: {fileID: 484072471}
   - component: {fileID: 484072472}
   - component: {fileID: 484072474}
-  - component: {fileID: 484072475}
   m_Layer: 6
   m_Name: H_Node
   m_TagString: Untagged
@@ -230,7 +229,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
-  max_Dist: 1.5
 --- !u!212 &484072469
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -434,18 +432,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &484072475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484072467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77713a1e46dd97d4d8ef87fa2cfea480, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &508557589 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7477562519263815476, guid: b65f271c88efcf14186845bd4630b73f, type: 3}
@@ -603,7 +589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodeList:
-  - {fileID: 484072475}
+  - {fileID: 484072468}
   - {fileID: 1548735664}
   - {fileID: 748255171}
   - {fileID: 2003394141}
@@ -617,6 +603,14 @@ MonoBehaviour:
   feetX: 1
   radius: 1
   legLen: 0.9
+  positionVariation: 0.7
+  bodyLRSettings:
+    bodySortingOrder: 1
+    limbPositionCount: 3
+    bodyStartWidth: 0.5
+    bodyEndWidth: 0.5
+    limbStartWidth: 0.05
+    limbEndWidth: 0.25
 --- !u!4 &851233619
 Transform:
   m_ObjectHideFlags: 0
