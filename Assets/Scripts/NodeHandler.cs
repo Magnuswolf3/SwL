@@ -14,7 +14,7 @@ public class NodeHandler : MonoBehaviour
     void Awake()
     {
         // Make Cursor Invisible
-        Cursor.visible = false;
+        // Cursor.visible = false;
 
         // Main Limb Generation Loop
         for (int i = 0; i < nodeList.Count; i++){
